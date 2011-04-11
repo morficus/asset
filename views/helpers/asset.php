@@ -367,6 +367,18 @@ class AssetHelper extends Helper {
     $paths = array($this->__getPath($type));
 		$paths = array_merge($paths, $this->options['searchPaths']);
 		
+  		//checks if a theme is being used
+		if(!empty($this->theme))
+		{
+			//cakePHP < 1.2 suggests putting themes in /webroot/theme/themeName, while cakePHP > 1.3 suggests putting it in /views/themed/themeName
+			//so I'm covering both cases here 
+			$themePaths = array(	WWW_ROOT . 'theme' . DS . $this->theme . DS,
+									VIEWS .  'themed' . DS . $this->theme . DS,
+								);
+								
+			$paths = array_merge($paths, $themePaths);
+		}
+		
     
     if (!empty($asset['plugin']) > 0) {
       $pluginPaths = App::path('plugins');
